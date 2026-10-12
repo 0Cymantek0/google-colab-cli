@@ -359,10 +359,6 @@ def _bridge_proxy_mode(ws: websocket.WebSocket) -> int:
     def stdin_to_ws():
         try:
             while True:
-                # A plain blocking read: select() over a single fd with no
-                # timeout adds nothing, and Windows select() only accepts
-                # sockets, so there it fails on the stdin fd and kills the
-                # pump before any input reaches the runtime.
                 data = os.read(stdin_fd, 8192)
                 if not data:
                     break
